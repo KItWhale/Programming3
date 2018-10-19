@@ -7,6 +7,7 @@ var snailArr = [];
 var slimeArr = [];
 var autoArr = [];
 var musorArr = [];
+var creeperArr = [];
 
 
 var side = 6;
@@ -86,6 +87,10 @@ function draw() {
                 fill(80, 20, 0);
                 rect(x * side, y * side, side, side);
             }
+            else if (matrix[y][x] == 9) {
+                fill(254, 18, 168);
+                rect(x * side, y * side, side, side);
+            }
         }
     }
 
@@ -110,10 +115,34 @@ function draw() {
     for (var i in autoArr) {
         autoArr[i].exterminate();
     }
+    for (var i in creeperArr) {
+        creeperArr[i].move();
+    }
 }
 
 
-
+function mousePressed() {
+    for (i = 0; i < 100; i++) {
+        if(mouseX < side*i){
+            var X = i;
+            break;
+        }
+    }
+    for (p = 0; p < 100; p++) {
+        if(mouseY < side*p){
+            var Y = p;
+            break;
+        }
+    }
+    if(X && Y){
+        if(matrix[Y][X]==0){
+            var creeper = new Creeper(X, Y, 9);
+            matrix[Y][X]=9;
+            creeperArr.push(creeper);
+        }
+    }
+ }
+ 
 
 
 
