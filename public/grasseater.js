@@ -1,8 +1,9 @@
 
 class GrassEater extends ParentClass{
-    constructor(x,y,index) {
+    constructor(x,y,index, gender) {
         super(x, y, index)
         this.energy = 5;
+        this.gender = Math.round(Math.random());
     }
     
     chooseCell(character){

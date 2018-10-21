@@ -9,12 +9,32 @@ var autoArr = [];
 var musorArr = [];
 var creeperArr = [];
 
+// var weather = "Spring"
+// setInterval(function(){ 
+//                 if(weather == "Spring"){
+//                     weather = "Summer"
+//                 }
+//                 else if(weather == "Summer"){
+//                     weather = "Autumn"
+//                 }
+//                 else if(weather == "Autumn"){
+//                     weather = "Winter"
+//                 }
+//                 else if(weather == "Winter"){
+//                     weather = "Spring"
+//                 }
+//                 console.log(weather)
+//             }, 20000);
 
-var side = 10;
+
+var side = 9.8;
 function setup() {
     frameRate(12);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#acacac')
+
+    textFont(200);
+    textSize(200);
 
     for (y = 0; y < matrix.length; y++) {
         for (x = 0; x < matrix[y].length; x++) {
@@ -46,12 +66,29 @@ function setup() {
     }
 }
 
+ 
+
 
 function draw() {
-
     for (y = 0; y < matrix.length; y++) {
         for (x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
+                // if(weather == "Spring"){
+                //     fill(0, 136, 0);
+                //     rect(x * side, y * side, side, side);
+                // }
+                // else if(weather == "Summer"){
+                //     fill(0, 150, 0);
+                //     rect(x * side, y * side, side, side);
+                // }
+                // else if(weather == "Autumn"){
+                //     fill(104, 174, 0);
+                //     rect(x * side, y * side, side, side);
+                // }
+                // else if(weather == "Winter"){
+                //     fill(239, 241, 253);
+                //     rect(x * side, y * side, side, side);
+                // }
                 fill("green");
                 rect(x * side, y * side, side, side);
             }
@@ -99,6 +136,7 @@ function draw() {
     }
     for (var i in grassEaterArr) {
         grassEaterArr[i].eat();
+        console.log(grassEaterArr[i].gender)
     }
     for (var i in predatorArr) {
         predatorArr[i].eat();
@@ -118,6 +156,7 @@ function draw() {
     for (var i in creeperArr) {
         creeperArr[i].move();
     }
+    
 }
 
 
