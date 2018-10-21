@@ -10,7 +10,7 @@ var musorArr = [];
 var creeperArr = [];
 
 
-var side = 6;
+var side = 10;
 function setup() {
     frameRate(12);
     createCanvas(matrix[0].length * side, matrix.length * side);
@@ -124,13 +124,13 @@ function draw() {
 function mousePressed() {
     for (i = 0; i < 100; i++) {
         if(mouseX < side*i){
-            var X = i;
+            var X = i-1;
             break;
         }
     }
     for (p = 0; p < 100; p++) {
         if(mouseY < side*p){
-            var Y = p;
+            var Y = p-1;
             break;
         }
     }
