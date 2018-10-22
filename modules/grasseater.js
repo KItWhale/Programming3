@@ -1,5 +1,5 @@
-
-class GrassEater extends ParentClass{
+var ParentClass = require("./ParentClass.js");
+module.exports = class GrassEater extends ParentClass{
     constructor(x,y,index, gender) {
         super(x, y, index)
         this.energy = 5;
@@ -11,35 +11,35 @@ class GrassEater extends ParentClass{
         return super.chooseCell(character);
     }
 
-    move(){
+    move(grassEaterArr){
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
         
         if(newCell){
 
-            matrix[this.y][this.x]=0;
+            this.matrix[this.y][this.x]=0;
 
-            matrix[newCell[1]][newCell[0]] = 2;
+            this.matrix[newCell[1]][newCell[0]] = 2;
             this.x=newCell[0];
             this.y=newCell[1];
 
             this.energy--;
             if(this.energy<=0){
-                this.die();
+                this.die(grassEaterArr);
             }
 
         }
         
     }
 
-    eat(){
+    eat(grassEaterArr, grassArr){
         var grasses = this.chooseCell(1);
         var grass = random(grasses);
         
         if(grass){
 
-            matrix[this.y][this.x]=0;
-            matrix[grass[1]][grass[0]] = 2;
+            this.matrix[this.y][this.x]=0;
+            this.matrix[grass[1]][grass[0]] = 2;
             this.x=grass[0];
             this.y=grass[1];
             
@@ -52,22 +52,22 @@ class GrassEater extends ParentClass{
 
             this.energy++;
             if(this.energy>=10){
-                this.mul();
+                this.mul(grassEaterArr);
             }
             
 
         }
         else{
-            this.move();
+            this.move(grassEaterArr);
         }
     }
 
-    mul(){
+    mul(grassEaterArr){
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
         
         if(newCell){
-            matrix[newCell[1]][newCell[0]] = 2;
+            this.matrix[newCell[1]][newCell[0]] = 2;
             var gre=new GrassEater(newCell[0],newCell[1],this.index)
             grassEaterArr.push(gre);
             this.energy=5;
@@ -75,8 +75,8 @@ class GrassEater extends ParentClass{
 
     }
 
-    die(){
-        matrix[this.y][this.x]=0;
+    die(grassEaterArr){
+        this.matrix[this.y][this.x]=0;
         for (var i in grassEaterArr) {
                 if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {
                     grassEaterArr.splice(i, 1);

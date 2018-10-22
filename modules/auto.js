@@ -1,5 +1,5 @@
-
-class Auto extends ParentClass{
+var ParentClass = require("./ParentClass.js");
+module.exports = class Auto extends ParentClass{
 
     getNewCoordinates() {
         this.directions = [
@@ -35,7 +35,8 @@ class Auto extends ParentClass{
         return super.chooseCell(character);
     }
 
-    move() {
+    move(grassArr
+    ) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
 
@@ -44,17 +45,26 @@ class Auto extends ParentClass{
 
         if (newCell) {
 
-            matrix[this.y][this.x] = 0;
+            this.matrix[this.y][this.x] = 0;
 
-            matrix[newCell[1]][newCell[0]] = 7;
+            this.matrix[newCell[1]][newCell[0]] = 7;
             this.x = newCell[0];
             this.y = newCell[1];
 
         }
         else if (grass) {
-            matrix[this.y][this.x] = 1;
+            for(var i in grassArr){
+                if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
+                    grassArr.splice(i, 1);
+                    var gr = new Grass (this.x, this.y, 1);
+                    grassArr.push(gr)
+                    break;
+                }
+            }
+            
+             this.matrix[this.y][this.x] = 1;
 
-            matrix[grass[1]][grass[0]] = 7;
+            this.matrix[grass[1]][grass[0]] = 7;
             this.x = grass[0];
             this.y = grass[1];
 
@@ -73,8 +83,8 @@ class Auto extends ParentClass{
 
         if (grassEater) {
 
-            matrix[this.y][this.x] = 0;
-            matrix[grassEater[1]][grassEater[0]] = 7;
+            this.matrix[this.y][this.x] = 0;
+            this.matrix[grassEater[1]][grassEater[0]] = 7;
             this.x = grassEater[0];
             this.y = grassEater[1];
 
@@ -88,8 +98,8 @@ class Auto extends ParentClass{
         }
         if (predator) {
 
-            matrix[this.y][this.x] = 0;
-            matrix[predator[1]][predator[0]] = 7;
+            this.matrix[this.y][this.x] = 0;
+            this.matrix[predator[1]][predator[0]] = 7;
             this.x = predator[0];
             this.y = predator[1];
 
@@ -101,8 +111,8 @@ class Auto extends ParentClass{
             }
         }
         if (snail) {
-            matrix[this.y][this.x] = 0;
-            matrix[snail[1]][snail[0]] = 7;
+            this.matrix[this.y][this.x] = 0;
+            this.matrix[snail[1]][snail[0]] = 7;
             this.x = snail[0];
             this.y = snail[1];
 

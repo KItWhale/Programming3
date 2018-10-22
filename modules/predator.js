@@ -1,5 +1,5 @@
-
-class Predator extends ParentClass{
+var ParentClass = require("./ParentClass");
+module.exports = class Predator extends ParentClass {
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = 50;
@@ -9,7 +9,7 @@ class Predator extends ParentClass{
         super.getNewCoordinates();
         return super.chooseCell(character);
     }
-    move() {
+    move(predatorArr, grassArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
 
@@ -18,40 +18,49 @@ class Predator extends ParentClass{
 
         if (newCell) {
 
-            matrix[this.y][this.x] = 0;
+            this.matrix[this.y][this.x] = 0;
 
-            matrix[newCell[1]][newCell[0]] = 3;
+            this.matrix[newCell[1]][newCell[0]] = 3;
             this.x = newCell[0];
             this.y = newCell[1];
 
             this.energy--;
             if (this.energy <= 0) {
-                this.die();
+                this.die(predatorArr);
             }
 
         }
         if (grass) {
-            matrix[this.y][this.x] = 1;
+            for (var i in grassArr) {
+                if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
+                    grassArr.splice(i, 1);
+                    var gr = new Grass(this.x, this.y, 1);
+                    grassArr.push(gr)
+                    break;
+                }
+            }
 
-            matrix[grass[1]][grass[0]] = 3;
+            this.matrix[this.y][this.x] = 1;
+
+            this.matrix[grass[1]][grass[0]] = 3;
             this.x = grass[0];
             this.y = grass[1];
 
             this.energy--;
             if (this.energy <= 0) {
-                this.die();
+                this.die(predatorArr);
             }
         }
 
     }
-    eat() {
+    eat(predatorArr, grassArr, grassEaterArr) {
         var grassEaters = this.chooseCell(2);
         var grassEater = random(grassEaters);
 
         if (grassEater) {
 
-            matrix[this.y][this.x] = 0;
-            matrix[grassEater[1]][grassEater[0]] = 3;
+            this.matrix[this.y][this.x] = 0;
+            this.matrix[grassEater[1]][grassEater[0]] = 3;
             this.x = grassEater[0];
             this.y = grassEater[1];
 
@@ -64,31 +73,31 @@ class Predator extends ParentClass{
             this.energy += 2;
             this.multiply++;
             if (this.multiply >= 5) {
-                this.mul();
+                this.mul(predatorArr);
             }
 
 
         }
         else {
-            this.move();
+            this.move(predatorArr, grassArr);
         }
     }
 
-    mul() {
+    mul(predatorArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
 
 
         if (newCell) {
-            matrix[newCell[1]][newCell[0]] = 3;
+            this.matrix[newCell[1]][newCell[0]] = 3;
             var pre = new Predator(newCell[0], newCell[1], this.index)
             predatorArr.push(pre);
             this.multiply = 3;
         }
 
     }
-    die() {
-        matrix[this.y][this.x] = 0;
+    die(predatorArr) {
+        this.matrix[this.y][this.x] = 0;
         for (var i in predatorArr) {
             if (this.x == predatorArr[i].x && this.y == predatorArr[i].y) {
                 predatorArr.splice(i, 1);
