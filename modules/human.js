@@ -1,11 +1,9 @@
 
-var Matrix = require("./Matrix.js");
-var myMatrix = new Matrix(100, 100);
-var matrix = myMatrix.mat();
+
 var ParentClass = require("./ParentClass.js");
 module.exports = class Human extends ParentClass {
-    constructor(x, y, index) {
-        super(x, y, index);
+    constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
         this.energy = 100;
         this.musor = 0;
     }
@@ -22,9 +20,9 @@ module.exports = class Human extends ParentClass {
         var grass = random(grasses);
 
         if (newCell) {
-            matrix[this.y][this.x] = 0;
+            this.matrix[this.y][this.x] = 0;
 
-            matrix[newCell[1]][newCell[0]] = 4;
+            this.matrix[newCell[1]][newCell[0]] = 4;
             this.x = newCell[0];
             this.y = newCell[1];
 
@@ -45,9 +43,9 @@ module.exports = class Human extends ParentClass {
                 }
             }
 
-            matrix[this.y][this.x] = 1;
+            this.matrix[this.y][this.x] = 1;
 
-            matrix[grass[1]][grass[0]] = 4;
+            this.matrix[grass[1]][grass[0]] = 4;
             this.x = grass[0];
             this.y = grass[1];
 
@@ -68,9 +66,9 @@ module.exports = class Human extends ParentClass {
 
         if (grassEater) {
 
-            matrix[this.y][this.x] = 0;
+            this.matrix[this.y][this.x] = 0;
 
-            matrix[grassEater[1]][grassEater[0]] = 4;
+            this.matrix[grassEater[1]][grassEater[0]] = 4;
             this.x = grassEater[0];
             this.y = grassEater[1];
 
@@ -83,9 +81,9 @@ module.exports = class Human extends ParentClass {
 
         }
         if (predator) {
-            matrix[this.y][this.x] = 0;
+            this.matrix[this.y][this.x] = 0;
 
-            matrix[predator[1]][predator[0]] = 4;
+            this.matrix[predator[1]][predator[0]] = 4;
             this.x = predator[0];
             this.y = predator[1];
 
@@ -101,7 +99,7 @@ module.exports = class Human extends ParentClass {
         }
     }
     die(humanArr) {
-        matrix[this.y][this.x] = 0;
+        this.matrix[this.y][this.x] = 0;
         for (var i in humanArr) {
             if (this.x == humanArr[i].x && this.y == humanArr[i].y) {
                 humanArr.splice(i, 1);

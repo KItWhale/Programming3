@@ -1,11 +1,9 @@
-var Matrix = require("./Matrix.js");
-var myMatrix = new Matrix(100, 100);
-var matrix = myMatrix.mat();
-
 var ParentClass = require("./ParentClass.js");
 var Slime = require("./slime");
 module.exports = class Snail extends ParentClass {
-
+    constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
+    }
     chooseCell(character) {
         super.getNewCoordinates();
         return super.chooseCell(character);
@@ -23,21 +21,21 @@ module.exports = class Snail extends ParentClass {
 
         if (newCell) {
 
-            matrix[this.y][this.x] = 6;
+            this.matrix[this.y][this.x] = 6;
 
-            var sli = new Slime(this.x, this.y, 6);
+            var sli = new Slime(this.x, this.y, 6, this.matrix);
             slimeArr.push(sli);
 
 
-            matrix[newCell[1]][newCell[0]] = 5;
+            this.matrix[newCell[1]][newCell[0]] = 5;
             this.x = newCell[0];
             this.y = newCell[1];
 
         }
         else if (grass) {
-            matrix[this.y][this.x] = 6;
+            this.matrix[this.y][this.x] = 6;
 
-            var sli = new Slime(this.x, this.y, 6);
+            var sli = new Slime(this.x, this.y, 6, this.matrix);
             slimeArr.push(sli);
 
             for (var i in grassArr) {
@@ -46,22 +44,21 @@ module.exports = class Snail extends ParentClass {
                     break;
                 }
             }
-            matrix[grass[1]][grass[0]] = 5;
+            this.matrix[grass[1]][grass[0]] = 5;
             this.x = grass[0];
             this.y = grass[1];
 
         }
         else if (slime) {
-            matrix[this.y][this.x] = 6;
+            this.matrix[this.y][this.x] = 6;
 
-            var sli = new Slime(this.x, this.y, 6);
+            var sli = new Slime(this.x, this.y, 6, this.matrix);
             slimeArr.push(sli);
 
-            matrix[slime[1]][slime[0]] = 5;
+            this.matrix[slime[1]][slime[0]] = 5;
             this.x = slime[0];
             this.y = slime[1];
 
         }
-
     }
 }

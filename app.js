@@ -7,6 +7,7 @@ var mat = require("./modules/Matrix.js");
 var matrix = mat(100, 100);
 
 var ParentClass = require("./modules/ParentClass.js");
+
 var Auto = require("./modules/auto.js");
 var Grass = require("./modules/grass.js");
 var GrassEater = require("./modules/grasseater.js");
@@ -29,28 +30,50 @@ var creeperArr = [];
 for (y = 0; y < matrix.length; y++) {
   for (x = 0; x < matrix[y].length; x++) {
       if (matrix[y][x] == 1) {
-          var gr = new Grass(x, y, 1);
+          var gr = new Grass(x, y, 1, matrix);
           grassArr.push(gr);
       }
       else if (matrix[y][x] == 2) {
-          var gre = new GrassEater(x, y, 2);
+          var gre = new GrassEater(x, y, 2, matrix);
           grassEaterArr.push(gre);
       }
       else if (matrix[y][x] == 3) {
-          var pre = new Predator(x, y, 3);
+          var pre = new Predator(x, y, 3, matrix);
           predatorArr.push(pre);
       }
       else if (matrix[y][x] == 4) {
-          var hum = new Human(x, y, 4);
+          var hum = new Human(x, y, 4, matrix);
           humanArr.push(hum);
       }
       else if (matrix[y][x] == 5) {
-          var sna = new Snail(x, y, 5);
+          var sna = new Snail(x, y, 5, matrix);
           snailArr.push(sna);
       }
       else if (matrix[y][x] == 7) {
-          var auto = new Auto(x, y, 7);
+          var auto = new Auto(x, y, 7, matrix);
           autoArr.push(auto);
+      }
+  }
+}
+
+function mousePressed() {
+  for (i = 0; i < 100; i++) {
+      if(mouseX < side*i){
+          var X = i-1;
+          break;
+      }
+  }
+  for (p = 0; p < 100; p++) {
+      if(mouseY < side*p){
+          var Y = p-1;
+          break;
+      }
+  }
+  if(X && Y){
+      if(matrix[Y][X]==0){
+          var creeper = new Creeper(X, Y, 9, matrix);
+          matrix[Y][X]=9;
+          creeperArr.push(creeper);
       }
   }
 }
@@ -74,33 +97,13 @@ for (var i in slimeArr) {
   slimeArr[i].die(slimeArr);
 }
 for (var i in autoArr) {
-  autoArr[i].exterminate();
+  autoArr[i].exterminate(grassEaterArr, grassArr, predatorArr, snailArr);
 }
 for (var i in creeperArr) {
-  creeperArr[i].move();
+  creeperArr[i].move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr);
 }
 
-function mousePressed() {
-  for (i = 0; i < 100; i++) {
-      if(mouseX < side*i){
-          var X = i-1;
-          break;
-      }
-  }
-  for (p = 0; p < 100; p++) {
-      if(mouseY < side*p){
-          var Y = p-1;
-          break;
-      }
-  }
-  if(X && Y){
-      if(matrix[Y][X]==0){
-          var creeper = new Creeper(X, Y, 9);
-          matrix[Y][X]=9;
-          creeperArr.push(creeper);
-      }
-  }
-}
+
 
 // Define the port to run on
 app.set('port', process.env.PORT || 3000);

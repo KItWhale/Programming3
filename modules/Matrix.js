@@ -1,10 +1,10 @@
 
-module.exports = function mat(n, m) {
-    var matrix = [];
-    for (this.y = 0; this.y < this.m; this.y++) {
-        matrix[this.y] = [];
-        for (this.x = 0; this.x < this.n; this.x++) {
-            matrix[this.y][this.x] = Math.round(Math.random());
+module.exports = function (n, m) {
+    var matrix = [];  
+    for (y = 0; y < m; y++) {
+        matrix[y] = [];
+        for (x = 0; x < n; x++) {
+            matrix[y][x] = Math.round(Math.random());
         }
     }
 

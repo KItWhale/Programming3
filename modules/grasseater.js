@@ -1,7 +1,7 @@
 var ParentClass = require("./ParentClass.js");
 module.exports = class GrassEater extends ParentClass{
-    constructor(x,y,index, gender) {
-        super(x, y, index)
+    constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
         this.energy = 5;
         this.gender = Math.round(Math.random());
     }
@@ -68,7 +68,7 @@ module.exports = class GrassEater extends ParentClass{
         
         if(newCell){
             this.matrix[newCell[1]][newCell[0]] = 2;
-            var gre=new GrassEater(newCell[0],newCell[1],this.index)
+            var gre=new GrassEater(newCell[0],newCell[1],this.index, this.matrix)
             grassEaterArr.push(gre);
             this.energy=5;
         }

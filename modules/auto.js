@@ -1,5 +1,8 @@
 var ParentClass = require("./ParentClass.js");
 module.exports = class Auto extends ParentClass{
+    constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
+    }
 
     getNewCoordinates() {
         this.directions = [
@@ -35,8 +38,7 @@ module.exports = class Auto extends ParentClass{
         return super.chooseCell(character);
     }
 
-    move(grassArr
-    ) {
+    move(grassArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
 
@@ -70,7 +72,7 @@ module.exports = class Auto extends ParentClass{
 
         }
     }
-    exterminate() {
+    exterminate(grassEaterArr, grassArr, predatorArr, snailArr) {
 
         var grassEaters = this.chooseCell(2);
         var grassEater = random(grassEaters);
@@ -124,7 +126,7 @@ module.exports = class Auto extends ParentClass{
             }
         }
         else {
-            this.move();
+            this.move(grassArr);
         }
     }
 }

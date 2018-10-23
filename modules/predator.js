@@ -1,7 +1,8 @@
 var ParentClass = require("./ParentClass");
 module.exports = class Predator extends ParentClass {
-    constructor(x, y, index) {
-        super(x, y, index);
+    constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
+
         this.energy = 50;
         this.multiply = 0;
     }
@@ -90,7 +91,7 @@ module.exports = class Predator extends ParentClass {
 
         if (newCell) {
             this.matrix[newCell[1]][newCell[0]] = 3;
-            var pre = new Predator(newCell[0], newCell[1], this.index)
+            var pre = new Predator(newCell[0], newCell[1], this.index, this.matrix)
             predatorArr.push(pre);
             this.multiply = 3;
         }

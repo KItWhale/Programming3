@@ -1,5 +1,5 @@
 module.exports = class ParentClass {
-    constructor(x, y, index) {
+    constructor(x, y, index, matrix) {
         this.matrix = matrix;
         this.x = x;
         this.y = y;
@@ -43,6 +43,11 @@ module.exports = class ParentClass {
 
         }
         return found;
+    }
+
+    random(Arr){
+        var Item = Arr[Math.floor(Math.random() * Arr.length)];
+        return Item;
     }
 
 }

@@ -1,7 +1,6 @@
-var ParentClass = require("./ParentClass.js");
-
-module.exports = class Creeper extends parentClass{
-    constructor(x, y, index) {
+module.exports = class Creeper{
+    constructor(x, y, index, matrix) {
+        this.matrix = matrix;
         this.x = x;
         this.y = y;
         this.index = index;
@@ -297,7 +296,7 @@ module.exports = class Creeper extends parentClass{
         ];
     }
 
-    Boom() {
+    Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr) {
         this.getBoomCoordinates();
 
         for (var i in this.BoomCoords) {
@@ -367,15 +366,6 @@ module.exports = class Creeper extends parentClass{
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 8) {
-                    for (var i in musorArr) {
-                        if (x == musorArr[i].x && y == musorArr[i].y) {
-                            musorArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
-                            break;
-                        }
-                    }
-                }
                 else if (this.matrix[y][x] == 9) {
                     for (var i in creeperArr) {
                         if (x == creeperArr[i].x && y == creeperArr[i].y) {
@@ -394,7 +384,7 @@ module.exports = class Creeper extends parentClass{
         return super.chooseCell(character);
     }
 
-    move() {
+    move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
 
@@ -408,15 +398,14 @@ module.exports = class Creeper extends parentClass{
 
             this.time--;
             if (this.time <= 0) {
-                this.Boom();
+                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr);
             }
         }
         else {
             this.time--;
             if (this.time <= 0) {
-                this.Boom();
+                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr);
             }
         }
-
     }
 }
