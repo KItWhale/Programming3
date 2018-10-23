@@ -1,8 +1,3 @@
-
-var Matrix = require("./Matrix.js");
-var myMatrix = new Matrix(100, 100);
-var matrix = myMatrix.mat();
-
 module.exports = class ParentClass {
     constructor(x, y, index) {
         this.matrix = matrix;
