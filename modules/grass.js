@@ -5,7 +5,7 @@ module.exports = class Grass extends ParentClass{
     }
     mul(grassArr) {
         this.multiply++;
-        var newCell = random(this.chooseCell(0));
+        var newCell = this.random(this.chooseCell(0));
         if (this.multiply >= 5 && newCell) {
             var newGrass = new Grass(newCell[0], newCell[1], this.index, this.matrix);
             grassArr.push(newGrass);

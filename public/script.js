@@ -1,14 +1,5 @@
-var ParentClass = require("../modules/ParentClass.js");
-var Auto = require("../modules/auto.js");
-var Grass = require("../modules/grass.js");
-var GrassEater = require("../modules/grasseater.js");
-var Human = require("../modules/human.js");
-var Predator = require("../modules/predator.js");
-var Slime = require("../modules/slime.js");
-var Snail = require("../modules/snail.js");
-var Creeper = require("../modules/creeper.js");
-
 var side = 9.8;
+
 function setup() {
     frameRate(5);
     createCanvas(matrix[0].length * side, matrix.length * side);

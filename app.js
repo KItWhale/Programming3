@@ -88,7 +88,7 @@ for (var i in predatorArr) {
   predatorArr[i].eat(predatorArr, grassArr, grassEaterArr);
 }
 for (var i in humanArr) {
-  humanArr[i].exterminate(humanArr, grassEaterArr, predatorArr);
+  humanArr[i].exterminate(humanArr, grassEaterArr, predatorArr, grassArr);
 }
 for (var i in snailArr) {
   snailArr[i].move(slimeArr);

@@ -3,7 +3,6 @@ module.exports = class GrassEater extends ParentClass{
     constructor(x, y, index, matrix){
         super(x, y, index, matrix);
         this.energy = 5;
-        this.gender = Math.round(Math.random());
     }
     
     chooseCell(character){
@@ -13,7 +12,7 @@ module.exports = class GrassEater extends ParentClass{
 
     move(grassEaterArr){
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
         
         if(newCell){
 
@@ -34,7 +33,7 @@ module.exports = class GrassEater extends ParentClass{
 
     eat(grassEaterArr, grassArr){
         var grasses = this.chooseCell(1);
-        var grass = random(grasses);
+        var grass = this.random(grasses);
         
         if(grass){
 
@@ -64,7 +63,7 @@ module.exports = class GrassEater extends ParentClass{
 
     mul(grassEaterArr){
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
         
         if(newCell){
             this.matrix[newCell[1]][newCell[0]] = 2;

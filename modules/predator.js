@@ -1,4 +1,5 @@
 var ParentClass = require("./ParentClass");
+var Grass = require("./Grass");
 module.exports = class Predator extends ParentClass {
     constructor(x, y, index, matrix){
         super(x, y, index, matrix);
@@ -12,10 +13,10 @@ module.exports = class Predator extends ParentClass {
     }
     move(predatorArr, grassArr) {
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
 
         var grasses = this.chooseCell(1);
-        var grass = random(grasses);
+        var grass = this.random(grasses);
 
         if (newCell) {
 
@@ -56,7 +57,7 @@ module.exports = class Predator extends ParentClass {
     }
     eat(predatorArr, grassArr, grassEaterArr) {
         var grassEaters = this.chooseCell(2);
-        var grassEater = random(grassEaters);
+        var grassEater = this.random(grassEaters);
 
         if (grassEater) {
 
@@ -86,7 +87,7 @@ module.exports = class Predator extends ParentClass {
 
     mul(predatorArr) {
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
 
 
         if (newCell) {

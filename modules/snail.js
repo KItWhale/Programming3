@@ -10,13 +10,13 @@ module.exports = class Snail extends ParentClass {
     }
     move(slimeArr) {
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
 
         var grasses = this.chooseCell(1);
-        var grass = random(grasses);
+        var grass = this.random(grasses);
 
         var slimes = this.chooseCell(6);
-        var slime = random(slimes);
+        var slime = this.random(slimes);
 
 
         if (newCell) {
