@@ -6,14 +6,11 @@ var app = express();
 var mat = require("./modules/Matrix.js");
 var matrix = mat(100, 100);
 
-var ParentClass = require("./modules/ParentClass.js");
-
 var Auto = require("./modules/auto.js");
 var Grass = require("./modules/grass.js");
 var GrassEater = require("./modules/grasseater.js");
 var Human = require("./modules/human.js");
 var Predator = require("./modules/predator.js");
-var Slime = require("./modules/slime.js");
 var Snail = require("./modules/snail.js");
 var Creeper = require("./modules/creeper.js");
 
@@ -91,7 +88,7 @@ for (var i in humanArr) {
   humanArr[i].exterminate(humanArr, grassEaterArr, predatorArr, grassArr);
 }
 for (var i in snailArr) {
-  snailArr[i].move(slimeArr);
+  snailArr[i].move(slimeArr, grassArr);
 }
 for (var i in slimeArr) {
   slimeArr[i].die(slimeArr);

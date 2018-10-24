@@ -8,7 +8,7 @@ module.exports = class Snail extends ParentClass {
         super.getNewCoordinates();
         return super.chooseCell(character);
     }
-    move(slimeArr) {
+    move(slimeArr, grassArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = this.random(emptyCells);
 
