@@ -1,9 +1,6 @@
 var ParentClass = require("./ParentClass.js");
 var Grass = require("./Grass");
 module.exports = class Auto extends ParentClass{
-    constructor(x, y, index, matrix){
-        super(x, y, index, matrix);
-    }
 
     getNewCoordinates() {
         this.directions = [
@@ -34,60 +31,62 @@ module.exports = class Auto extends ParentClass{
             [this.x + 2, this.y + 2]
         ];
     }
-    chooseCell(character) {
+     chooseCell(character, matrix) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(character, matrix);
     }
 
-    move(grassArr) {
-        var emptyCells = this.chooseCell(0);
-        var newCell = this.random(emptyCells);
+    move(grassArr, matrix) {
+        var emptyCells = this.chooseCell(0, matrix);
+        var newCell = this.random(emptyCells, matrix);
 
-        var grasses = this.chooseCell(1);
-        var grass = this.random(grasses);
+        var grasses = this.chooseCell(1, matrix);
+        var grass = this.random(grasses, matrix);
 
-        if (newCell) {
-
-            this.matrix[this.y][this.x] = 0;
-
-            this.matrix[newCell[1]][newCell[0]] = 7;
-            this.x = newCell[0];
-            this.y = newCell[1];
-
-        }
-        else if (grass) {
+        
+        if (grass) {
             for(var i in grassArr){
-                if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
+                if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y ) {
                     grassArr.splice(i, 1);
-                    var gr = new Grass (this.x, this.y, 1);
-                    grassArr.push(gr)
+                        var gr = new Grass (this.x, this.y, 1);
+                        grassArr.push(gr);
+                        matrix[this.y][this.x] = 1;
                     break;
                 }
             }
             
-             this.matrix[this.y][this.x] = 1;
+            
 
-            this.matrix[grass[1]][grass[0]] = 7;
+            matrix[grass[1]][grass[0]] = 7;
             this.x = grass[0];
             this.y = grass[1];
 
         }
-    }
-    exterminate(grassEaterArr, grassArr, predatorArr, snailArr) {
+        else if (newCell) {
 
-        var grassEaters = this.chooseCell(2);
+            matrix[this.y][this.x] = 0;
+
+            matrix[newCell[1]][newCell[0]] = 7;
+            this.x = newCell[0];
+            this.y = newCell[1];
+
+        }
+    }
+    exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix) {
+
+        var grassEaters = this.chooseCell(2, matrix);
         var grassEater = this.random(grassEaters);
 
-        var predators = this.chooseCell(3);
+        var predators = this.chooseCell(3, matrix);
         var predator = this.random(predators);
 
-        var snails = this.chooseCell(5);
+        var snails = this.chooseCell(5, matrix);
         var snail = this.random(snails);
 
         if (grassEater) {
 
-            this.matrix[this.y][this.x] = 0;
-            this.matrix[grassEater[1]][grassEater[0]] = 7;
+            matrix[this.y][this.x] = 0;
+            matrix[grassEater[1]][grassEater[0]] = 7;
             this.x = grassEater[0];
             this.y = grassEater[1];
 
@@ -101,8 +100,8 @@ module.exports = class Auto extends ParentClass{
         }
         if (predator) {
 
-            this.matrix[this.y][this.x] = 0;
-            this.matrix[predator[1]][predator[0]] = 7;
+            matrix[this.y][this.x] = 0;
+            matrix[predator[1]][predator[0]] = 7;
             this.x = predator[0];
             this.y = predator[1];
 
@@ -114,8 +113,8 @@ module.exports = class Auto extends ParentClass{
             }
         }
         if (snail) {
-            this.matrix[this.y][this.x] = 0;
-            this.matrix[snail[1]][snail[0]] = 7;
+            matrix[this.y][this.x] = 0;
+            matrix[snail[1]][snail[0]] = 7;
             this.x = snail[0];
             this.y = snail[1];
 
@@ -127,7 +126,7 @@ module.exports = class Auto extends ParentClass{
             }
         }
         else {
-            this.move(grassArr);
+            this.move(grassArr, matrix);
         }
     }
 }

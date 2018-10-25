@@ -1,44 +1,44 @@
 var ParentClass = require("./ParentClass.js");
 module.exports = class GrassEater extends ParentClass{
-    constructor(x, y, index, matrix){
-        super(x, y, index, matrix);
+    constructor(x, y, index){
+        super(x, y, index);
         this.energy = 5;
     }
     
-    chooseCell(character){
+    chooseCell(character, matrix){
         super.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(character, matrix);
     }
 
-    move(grassEaterArr){
-        var emptyCells = this.chooseCell(0);
+    move(grassEaterArr, matrix){
+        var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         
         if(newCell){
 
-            this.matrix[this.y][this.x]=0;
+            matrix[this.y][this.x]=0;
 
-            this.matrix[newCell[1]][newCell[0]] = 2;
+            matrix[newCell[1]][newCell[0]] = 2;
             this.x=newCell[0];
             this.y=newCell[1];
 
             this.energy--;
             if(this.energy<=0){
-                this.die(grassEaterArr);
+                this.die(grassEaterArr, matrix);
             }
 
         }
         
     }
 
-    eat(grassEaterArr, grassArr){
-        var grasses = this.chooseCell(1);
+    eat(grassEaterArr, grassArr, matrix){
+        var grasses = this.chooseCell(1, matrix);
         var grass = this.random(grasses);
         
         if(grass){
 
-            this.matrix[this.y][this.x]=0;
-            this.matrix[grass[1]][grass[0]] = 2;
+            matrix[this.y][this.x]=0;
+            matrix[grass[1]][grass[0]] = 2;
             this.x=grass[0];
             this.y=grass[1];
             
@@ -51,31 +51,31 @@ module.exports = class GrassEater extends ParentClass{
 
             this.energy++;
             if(this.energy>=10){
-                this.mul(grassEaterArr);
+                this.mul(grassEaterArr, matrix);
             }
             
 
         }
         else{
-            this.move(grassEaterArr);
+            this.move(grassEaterArr, matrix);
         }
     }
 
-    mul(grassEaterArr){
-        var emptyCells = this.chooseCell(0);
+    mul(grassEaterArr, matrix){
+        var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         
         if(newCell){
-            this.matrix[newCell[1]][newCell[0]] = 2;
-            var gre=new GrassEater(newCell[0],newCell[1],this.index, this.matrix)
+            matrix[newCell[1]][newCell[0]] = 2;
+            var gre=new GrassEater(newCell[0],newCell[1],this.index, matrix)
             grassEaterArr.push(gre);
             this.energy=5;
         }
 
     }
 
-    die(grassEaterArr){
-        this.matrix[this.y][this.x]=0;
+    die(grassEaterArr, matrix){
+        matrix[this.y][this.x]=0;
         for (var i in grassEaterArr) {
                 if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {
                     grassEaterArr.splice(i, 1);

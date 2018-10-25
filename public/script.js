@@ -10,7 +10,6 @@ function setup() {
         matrix = mtx;
         createCanvas(matrix[0].length * side, matrix.length * side);
         noLoop();
-        console.log(matrix)
 
         socket.on("redraw", function(mtx){
             matrix = mtx;

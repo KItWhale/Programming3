@@ -1,17 +1,13 @@
 var ParentClass = require("./ParentClass.js");
 module.exports = class Grass extends ParentClass{
-    constructor(x, y, index, matrix){
-        super(x, y, index, matrix);
-    }
-    mul(grassArr) {
+    mul(grassArr, matrix) {
         this.multiply++;
-        var newCell = this.random(this.chooseCell(0));
+        var newCell = this.random(this.chooseCell(0, matrix));
         if (this.multiply >= 5 && newCell) {
-            var newGrass = new Grass(newCell[0], newCell[1], this.index, this.matrix);
+            var newGrass = new Grass(newCell[0], newCell[1], this.index, matrix);
             grassArr.push(newGrass);
-            this.matrix[newCell[1]][newCell[0]] = 1;
+            matrix[newCell[1]][newCell[0]] = 1;
             this.multiply = 0;
         }
     }
-
 }

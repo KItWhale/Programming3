@@ -1,6 +1,5 @@
 module.exports = class Creeper{
-    constructor(x, y, index, matrix) {
-        this.matrix = matrix;
+    constructor(x, y, index) {
         this.x = x;
         this.y = y;
         this.index = index;
@@ -296,82 +295,82 @@ module.exports = class Creeper{
         ];
     }
 
-    Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr) {
+    Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix) {
         this.getBoomCoordinates();
 
         for (var i in this.BoomCoords) {
             var x = this.BoomCoords[i][0];
             var y = this.BoomCoords[i][1];
-            if (x >= 0 && x < this.matrix[0].length && y >= 0 && y < this.matrix.length) {
-                if (this.matrix[y][x] == 1) {
+            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+                if (matrix[y][x] == 1) {
                     for (var i in grassArr) {
                         if (x == grassArr[i].x && y == grassArr[i].y) {
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             grassArr.splice(i, 1);
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 2) {
+                else if (matrix[y][x] == 2) {
                     for (var i in grassEaterArr) {
                         if (x == grassEaterArr[i].x && y == grassEaterArr[i].y) {
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             grassEaterArr.splice(i, 1);
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 3) {
+                else if (matrix[y][x] == 3) {
                     for (var i in predatorArr) {
                         if (x == predatorArr[i].x && y == predatorArr[i].y) {
                             predatorArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 4) {
+                else if (matrix[y][x] == 4) {
                     for (var i in humanArr) {
                         if (x == humanArr[i].x && y == humanArr[i].y) {
                             humanArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 5) {
+                else if (matrix[y][x] == 5) {
                     for (var i in snailArr) {
                         if (x == snailArr[i].x && y == snailArr[i].y) {
                             snailArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 6) {
+                else if (matrix[y][x] == 6) {
                     for (var i in slimeArr) {
                         if (x == slimeArr[i].x && y == slimeArr[i].y) {
                             slimeArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 7) {
+                else if (matrix[y][x] == 7) {
                     for (var i in autoArr) {
                         if (x == autoArr[i].x && y == autoArr[i].y) {
                             autoArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             break;
                         }
                     }
                 }
-                else if (this.matrix[y][x] == 9) {
+                else if (matrix[y][x] == 9) {
                     for (var i in creeperArr) {
                         if (x == creeperArr[i].x && y == creeperArr[i].y) {
 
                             creeperArr.splice(i, 1);
-                            this.matrix[y][x] = 0;
+                            matrix[y][x] = 0;
                             break;
                         }
                     }
@@ -379,32 +378,32 @@ module.exports = class Creeper{
             }
         }
     }
-    chooseCell(character) {
+    chooseCell(character, matrix) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(character, matrix);
     }
 
-    move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr) {
-        var emptyCells = this.chooseCell(0);
+    move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix) {
+        var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
         if (newCell) {
 
-            this.matrix[this.y][this.x] = 0;
+            matrix[this.y][this.x] = 0;
 
-            this.matrix[newCell[1]][newCell[0]] = 9;
+            matrix[newCell[1]][newCell[0]] = 9;
             this.x = newCell[0];
             this.y = newCell[1];
 
             this.time--;
             if (this.time <= 0) {
-                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr);
+                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
             }
         }
         else {
             this.time--;
             if (this.time <= 0) {
-                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr);
+                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
             }
         }
     }
