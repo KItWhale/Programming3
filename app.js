@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
 
 var mat = require("./modules/Matrix.js");
 var matrix = mat(100, 100);
@@ -102,13 +104,24 @@ for (var i in creeperArr) {
 
 
 
-// Define the port to run on
-app.set('port', process.env.PORT || 3000);
+app.use(express.static('public'));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Listen for requests
-var server = app.listen(app.get('port'), function() {
-  var port = server.address().port;
-  console.log('Magic happens on port ' + port);
+app.get('/', function (req, res) {
+  res.redirect('index.html');
 });
+
+server.listen(3000);
+
+var frameRate = 5;
+var drawTime = 1000/frameRate;
+
+io.on("connection", function(socket){
+    socket.emit("receive matrix", matrix);
+
+    
+    var Interval = setInterval(function(){
+        socket.emit("redraw", matrix);
+    }, drawTime);
+});
+
+

@@ -1,8 +1,22 @@
+var matrix;
+var socket;
 var side = 9.8;
 
 function setup() {
-    frameRate(5);
-    createCanvas(matrix[0].length * side, matrix.length * side);
+    frameRate(0);
+    socket = io.connect();
+
+    socket.on("receive matrix", function(mtx){
+        matrix = mtx;
+        createCanvas(matrix[0].length * side, matrix.length * side);
+        noLoop();
+        console.log(matrix)
+
+        socket.on("redraw", function(mtx){
+            matrix = mtx;
+            redraw();
+        });
+    });
     background('#acacac')
 }
 
