@@ -380,13 +380,29 @@ module.exports = class Creeper{
     }
     chooseCell(character, matrix) {
         this.getNewCoordinates();
-        return super.chooseCell(character, matrix);
+        var found = [];
+        for (var i in this.directions) {
+            var x = this.directions[i][0];
+            var y = this.directions[i][1];
+            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+                if (matrix[y][x] == character) {
+                    found.push(this.directions[i]);
+                }
+            }
+
+        }
+        return found;
+    }
+
+    random(Arr){
+        var Item = Arr[Math.floor(Math.random() * Arr.length)];
+        return Item;
     }
 
     move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
-
+        
         if (newCell) {
 
             matrix[this.y][this.x] = 0;

@@ -30,25 +30,7 @@ var creeperArr = [];
 
 
 // function mousePressed() {
-//   for (i = 0; i < 100; i++) {
-//       if(mouseX < side*i){
-//           var X = i-1;
-//           break;
-//       }
-//   }
-//   for (p = 0; p < 100; p++) {
-//       if(mouseY < side*p){
-//           var Y = p-1;
-//           break;
-//       }
-//   }
-//   if(X && Y){
-//       if(matrix[Y][X]==0){
-//           var creeper = new Creeper(X, Y, 9, matrix);
-//           matrix[Y][X]=9;
-//           creeperArr.push(creeper);
-//       }
-//   }
+
 // }
 
 
@@ -58,15 +40,16 @@ var creeperArr = [];
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.redirect('index.html');
+    res.redirect('index.html');
 });
 
 server.listen(3000);
 
 var frameRate = 5;
-var drawTime = 1000/frameRate;
+var drawTime = 1000 / frameRate;
+var FrameCount = 0;
 
-io.on("connection", function(socket){
+io.on("connection", function (socket) {
     socket.emit("receive matrix", matrix);
 
     for (y = 0; y < matrix.length; y++) {
@@ -97,14 +80,25 @@ io.on("connection", function(socket){
             }
         }
     }
-    var obj = {
-        "Grass": grassArr.length
-    }
-    var myJSON = JSON.stringify(obj);
 
-    fs.writeFileSync("Statistics.json", myJSON);
-    
-    var Interval = setInterval(function(){
+    socket.on("click", function (mouseX, mouseY, side) {
+
+        var X = Math.floor(mouseX / side) - 1;
+        var Y = Math.floor(mouseY / side) - 1;
+
+
+        if (matrix[Y][X] == 0) {
+            var creeper = new Creeper(X, Y, 9);
+            matrix[Y][X] = 9;
+            creeperArr.push(creeper);
+        }
+    });
+
+
+
+
+    var Interval = setInterval(function () {
+
         for (var i in grassArr) {
             grassArr[i].mul(grassArr, matrix);
         }
@@ -126,23 +120,35 @@ io.on("connection", function(socket){
         for (var i in autoArr) {
             autoArr[i].exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix);
         }
-        // for (var i in creeperArr) {
-        //     creeperArr[i].move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
-        // }
+        for (var i in creeperArr) {
+            creeperArr[i].move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
+        }
+
+        FrameCount++;
+        if (FrameCount >= 60) {
+            Statistics = {
+                "Grass": grassArr.length,
+                "GrassEater": grassEaterArr.length,
+                "Human": humanArr.length,
+                "Predator": predatorArr.length,
+                "Snail": snailArr.length,
+                "Auto": autoArr.length,
+                "Creeper": creeperArr.length
+            }
+            socket.emit("Right Text", Statistics);
+            main(Statistics);
+
+            FrameCount = 0;
+        }
 
         socket.emit("redraw", matrix);
 
-        obj = {
-            "Grass": grassArr.length,
-            "GrassEater": grassEaterArr.length,
-            "Human": humanArr.length,
-            "Predator": predatorArr.length,
-            "Snail": snailArr.length,
-            "Auto": autoArr.length,
-            "Creeper": creeperArr.length
-        }
-        myJSON = JSON.stringify(obj);
-        fs.writeFileSync("Statistics.json", myJSON)
-
     }, drawTime);
+
+    function main (stat){
+
+        myJSON = JSON.stringify(Statistics);
+        fs.writeFileSync("Statistics.json", myJSON)
+    }
+
 });

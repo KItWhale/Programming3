@@ -67,7 +67,7 @@ module.exports = class GrassEater extends ParentClass{
         
         if(newCell){
             matrix[newCell[1]][newCell[0]] = 2;
-            var gre=new GrassEater(newCell[0],newCell[1],this.index, matrix)
+            var gre=new GrassEater(newCell[0],newCell[1],this.index)
             grassEaterArr.push(gre);
             this.energy=5;
         }
