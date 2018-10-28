@@ -13,7 +13,7 @@ module.exports = class Human extends ParentClass {
         super.getNewCoordinates();
         return super.chooseCell(character, matrix);
     }
-    move(humanArr, grassArr, matrix) {
+    move(humanArr, grassArr, matrix, humanLifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
@@ -40,7 +40,7 @@ module.exports = class Human extends ParentClass {
 
             this.energy--;
             if (this.energy <= 0) {
-                this.die(humanArr, matrix);
+                this.die(humanArr, matrix, humanLifeArr);
             }
         }
         else if (newCell) {
@@ -52,14 +52,14 @@ module.exports = class Human extends ParentClass {
 
             this.energy--;
             if (this.energy <= 0) {
-                this.die(humanArr, matrix);
+                this.die(humanArr, matrix, humanLifeArr);
             }
 
 
         }
 
     }
-    exterminate(humanArr, grassEaterArr, predatorArr, grassArr, matrix) {
+    exterminate(humanArr, grassEaterArr, predatorArr, grassArr, matrix, humanLifeArr, predatorLifeArr, grassEaterLifeArr) {
         var grassEaters = this.chooseCell(2, matrix);
         var grassEater = this.random(grassEaters);
 
@@ -74,6 +74,7 @@ module.exports = class Human extends ParentClass {
             matrix[grassEater[1]][grassEater[0]] = 4;
             this.x = grassEater[0];
             this.y = grassEater[1];
+            grassEaterLifeArr[1]++;
 
             for (var i in grassEaterArr) {
                 if (grassEater[0] == grassEaterArr[i].x && grassEater[1] == grassEaterArr[i].y) {
@@ -89,6 +90,7 @@ module.exports = class Human extends ParentClass {
             matrix[predator[1]][predator[0]] = 4;
             this.x = predator[0];
             this.y = predator[1];
+            predatorLifeArr[1]++;
 
             for (var i in predatorArr) {
                 if (predator[0] == predatorArr[i].x && predator[1] == predatorArr[i].y) {
@@ -98,11 +100,12 @@ module.exports = class Human extends ParentClass {
             }
         }
         else {
-            this.move(humanArr, grassArr, matrix);
+            this.move(humanArr, grassArr, matrix, humanLifeArr);
         }
     }
-    die(humanArr, matrix) {
+    die(humanArr, matrix, humanLifeArr) {
         matrix[this.y][this.x] = 0;
+        humanLifeArr[1]++;
         for (var i in humanArr) {
             if (this.x == humanArr[i].x && this.y == humanArr[i].y) {
                 humanArr.splice(i, 1);

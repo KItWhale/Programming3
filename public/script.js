@@ -1,22 +1,16 @@
 var matrix;
 var socket;
 var side = 7;
-var sideX = 12;
 var Stat;
 
-
-    for(var i in Stat){
-        var arrText = i + ": " + Stat[i];
-
-    }
-
 function setup() {
-
+    frameRate(0);
     socket = io.connect();
 
     socket.on("receive matrix", function(mtx){
+
         matrix = mtx;
-        createCanvas(matrix[0].length * sideX, matrix.length * side);
+        createCanvas(matrix[0].length * side + 1000, matrix.length * side);
         noLoop();
 
         socket.on("redraw", function(mtx){
@@ -28,20 +22,18 @@ function setup() {
             Stat = Statistics;
         });
         
-        function click(evt) {
-            socket.emit("click", evt.pageX, evt.pageY, side);
-        }
-        window.onclick = click;
     });
+
+    function click(evt) {
+        socket.emit("click", evt.pageX, evt.pageY, side);
+    }
+    window.onclick = click;
 
     background('#acacac')
 }
 
- 
-
-
 function draw() {
-    background('#acacac')
+    background('#acacac');
 
     textSize(32);
     fill("black");
@@ -50,7 +42,7 @@ function draw() {
         text(i + ": " + Stat[i], 750, margin);
         margin += 35;
     }
-    
+
     for (y = 0; y < matrix.length; y++) {
         for (x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {

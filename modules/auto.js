@@ -72,7 +72,7 @@ module.exports = class Auto extends ParentClass{
 
         }
     }
-    exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix) {
+    exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix, snailLifeArr, predatorLifeArr, grassEaterLifeArr) {
 
         var grassEaters = this.chooseCell(2, matrix);
         var grassEater = this.random(grassEaters);
@@ -89,6 +89,7 @@ module.exports = class Auto extends ParentClass{
             matrix[grassEater[1]][grassEater[0]] = 7;
             this.x = grassEater[0];
             this.y = grassEater[1];
+            grassEaterLifeArr[1]++;
 
             for (var i in grassEaterArr) {
                 if (grassEater[0] == grassEaterArr[i].x && grassEater[1] == grassEaterArr[i].y) {
@@ -104,6 +105,7 @@ module.exports = class Auto extends ParentClass{
             matrix[predator[1]][predator[0]] = 7;
             this.x = predator[0];
             this.y = predator[1];
+            predatorLifeArr[1]++;
 
             for (var i in predatorArr) {
                 if (predator[0] == predatorArr[i].x && predator[1] == predatorArr[i].y) {
@@ -117,6 +119,7 @@ module.exports = class Auto extends ParentClass{
             matrix[snail[1]][snail[0]] = 7;
             this.x = snail[0];
             this.y = snail[1];
+            snailLifeArr[1]++;
 
             for (var i in snailArr) {
                 if (snail[0] == snailArr[i].x && snail[1] == snailArr[i].y) {
