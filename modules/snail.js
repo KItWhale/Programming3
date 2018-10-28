@@ -5,7 +5,7 @@ module.exports = class Snail extends ParentClass {
         super.getNewCoordinates();
         return super.chooseCell(character, matrix);
     }
-    move(slimeArr, grassArr, matrix) {
+    move(slimeArr, grassArr, matrix, grassLifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
@@ -21,6 +21,7 @@ module.exports = class Snail extends ParentClass {
             for (var i in grassArr) {
                 if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
                     grassArr.splice(i, 1);
+                    grassLifeArr[1]++;
                     break;
                 }
             }

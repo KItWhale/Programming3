@@ -113,22 +113,22 @@ io.on("connection", function (socket) {
             grassEaterArr[i].eat(grassEaterArr, grassArr, matrix, grassEaterLifeArr, grassLifeArr);
         }
         for (var i in predatorArr) {
-            predatorArr[i].eat(predatorArr, grassArr, grassEaterArr, matrix, predatorLifeArr, grassEaterLifeArr);
+            predatorArr[i].eat(predatorArr, grassArr, grassEaterArr, matrix, predatorLifeArr, grassEaterLifeArr, grassLifeArr);
         }
         for (var i in humanArr) {
-            humanArr[i].exterminate(humanArr, grassEaterArr, predatorArr, grassArr, matrix, humanLifeArr, predatorLifeArr, grassEaterLifeArr);
+            humanArr[i].exterminate(humanArr, grassEaterArr, predatorArr, grassArr, matrix, humanLifeArr, predatorLifeArr, grassEaterLifeArr, grassLifeArr);
         }
         for (var i in snailArr) {
-            snailArr[i].move(slimeArr, grassArr, matrix);
+            snailArr[i].move(slimeArr, grassArr, matrix, grassLifeArr);
         }
         for (var i in slimeArr) {
             slimeArr[i].die(slimeArr, matrix);
         }
         for (var i in autoArr) {
-            autoArr[i].exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix, snailLifeArr, predatorLifeArr, grassEaterLifeArr);
+            autoArr[i].exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix, snailLifeArr, predatorLifeArr, grassEaterLifeArr, grassLifeArr);
         }
         for (var i in creeperArr) {
-            creeperArr[i].move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
+            creeperArr[i].move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix, autoLifeArr, snailLifeArr, predatorLifeArr, humanLifeArr, grassEaterLifeArr, grassLifeArr);
         }
 
         socket.emit("redraw", matrix);
@@ -149,7 +149,7 @@ io.on("connection", function (socket) {
             "Predator": predatorArr.length, "Predator-Alive": predatorLifeArr[0], "Predator-Dead": predatorLifeArr[1],
             "Human": humanArr.length, "Human-Alive": humanLifeArr[0], "Human-Dead": humanLifeArr[1],
             "Snail": snailArr.length, "Snail-Alive": snailLifeArr[0], "Snail-Dead": snailLifeArr[1],
-            "Auto": autoArr.length, "Auto-Alive": autoLifeArr[0], "Auto-Dead": autoLifeArr[1],
+            "Auto": autoArr.length, "Auto-Alive": autoLifeArr[0], "Auto-Dead": autoLifeArr[1]
         }
         socket.emit("Right Statistics", Statistics);
         main(Statistics);

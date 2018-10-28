@@ -10,7 +10,7 @@ module.exports = class Predator extends ParentClass {
         super.getNewCoordinates();
         return super.chooseCell(character, matrix);
     }
-    move(predatorArr, grassArr, matrix, predatorLifeArr) {
+    move(predatorArr, grassArr, matrix, predatorLifeArr, grassLifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
@@ -22,9 +22,9 @@ module.exports = class Predator extends ParentClass {
             for (var i in grassArr) {
                 if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
                     grassArr.splice(i, 1)
-                        var gr = new Grass (this.x, this.y, 1);
-                        grassArr.push(gr);  
-                        matrix[this.y][this.x] = 1;
+                    var gr = new Grass (this.x, this.y, 1);
+                    grassArr.push(gr);  
+                    matrix[this.y][this.x] = 1;
                     break;
                 }
             }
@@ -56,7 +56,7 @@ module.exports = class Predator extends ParentClass {
         }
 
     }
-    eat(predatorArr, grassArr, grassEaterArr, matrix, predatorLifeArr, grassEaterLifeArr) {
+    eat(predatorArr, grassArr, grassEaterArr, matrix, predatorLifeArr, grassEaterLifeArr, grassLifeArr) {
         var grassEaters = this.chooseCell(2, matrix);
         var grassEater = this.random(grassEaters);
 
@@ -83,7 +83,7 @@ module.exports = class Predator extends ParentClass {
 
         }
         else {
-            this.move(predatorArr, grassArr, matrix, predatorLifeArr);
+            this.move(predatorArr, grassArr, matrix, predatorLifeArr, grassLifeArr);
         }
     }
 

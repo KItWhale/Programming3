@@ -13,7 +13,7 @@ module.exports = class Human extends ParentClass {
         super.getNewCoordinates();
         return super.chooseCell(character, matrix);
     }
-    move(humanArr, grassArr, matrix, humanLifeArr) {
+    move(humanArr, grassArr, matrix, humanLifeArr, grassLifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
@@ -25,9 +25,9 @@ module.exports = class Human extends ParentClass {
             for (var i in grassArr) {
                 if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
                     grassArr.splice(i, 1);
-                        var gr = new Grass (this.x, this.y, 1);
-                        grassArr.push(gr);
-                        matrix[this.y][this.x] = 1;
+                    var gr = new Grass (this.x, this.y, 1);
+                    grassArr.push(gr);
+                    matrix[this.y][this.x] = 1;
                     break;
                 }
             }
@@ -59,7 +59,7 @@ module.exports = class Human extends ParentClass {
         }
 
     }
-    exterminate(humanArr, grassEaterArr, predatorArr, grassArr, matrix, humanLifeArr, predatorLifeArr, grassEaterLifeArr) {
+    exterminate(humanArr, grassEaterArr, predatorArr, grassArr, matrix, humanLifeArr, predatorLifeArr, grassEaterLifeArr, grassLifeArr) {
         var grassEaters = this.chooseCell(2, matrix);
         var grassEater = this.random(grassEaters);
 
@@ -100,7 +100,7 @@ module.exports = class Human extends ParentClass {
             }
         }
         else {
-            this.move(humanArr, grassArr, matrix, humanLifeArr);
+            this.move(humanArr, grassArr, matrix, humanLifeArr, grassLifeArr);
         }
     }
     die(humanArr, matrix, humanLifeArr) {

@@ -295,7 +295,7 @@ module.exports = class Creeper{
         ];
     }
 
-    Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix) {
+    Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix, autoLifeArr, snailLifeArr, predatorLifeArr, humanLifeArr, grassEaterLifeArr, grassLifeArr) {
         this.getBoomCoordinates();
 
         for (var i in this.BoomCoords) {
@@ -305,6 +305,7 @@ module.exports = class Creeper{
                 if (matrix[y][x] == 1) {
                     for (var i in grassArr) {
                         if (x == grassArr[i].x && y == grassArr[i].y) {
+                            grassLifeArr[1]++;
                             matrix[y][x] = 0;
                             grassArr.splice(i, 1);
                             break;
@@ -314,6 +315,7 @@ module.exports = class Creeper{
                 else if (matrix[y][x] == 2) {
                     for (var i in grassEaterArr) {
                         if (x == grassEaterArr[i].x && y == grassEaterArr[i].y) {
+                            grassEaterLifeArr[1]++;
                             matrix[y][x] = 0;
                             grassEaterArr.splice(i, 1);
                             break;
@@ -323,6 +325,7 @@ module.exports = class Creeper{
                 else if (matrix[y][x] == 3) {
                     for (var i in predatorArr) {
                         if (x == predatorArr[i].x && y == predatorArr[i].y) {
+                            predatorLifeArr[1]++;
                             predatorArr.splice(i, 1);
                             matrix[y][x] = 0;
                             break;
@@ -332,6 +335,7 @@ module.exports = class Creeper{
                 else if (matrix[y][x] == 4) {
                     for (var i in humanArr) {
                         if (x == humanArr[i].x && y == humanArr[i].y) {
+                            humanLifeArr[1]++;
                             humanArr.splice(i, 1);
                             matrix[y][x] = 0;
                             break;
@@ -341,6 +345,7 @@ module.exports = class Creeper{
                 else if (matrix[y][x] == 5) {
                     for (var i in snailArr) {
                         if (x == snailArr[i].x && y == snailArr[i].y) {
+                            snailLifeArr[1]++;
                             snailArr.splice(i, 1);
                             matrix[y][x] = 0;
                             break;
@@ -359,6 +364,7 @@ module.exports = class Creeper{
                 else if (matrix[y][x] == 7) {
                     for (var i in autoArr) {
                         if (x == autoArr[i].x && y == autoArr[i].y) {
+                            autoLifeArr[1]++;
                             autoArr.splice(i, 1);
                             matrix[y][x] = 0;
                             break;
@@ -368,7 +374,6 @@ module.exports = class Creeper{
                 else if (matrix[y][x] == 9) {
                     for (var i in creeperArr) {
                         if (x == creeperArr[i].x && y == creeperArr[i].y) {
-
                             creeperArr.splice(i, 1);
                             matrix[y][x] = 0;
                             break;
@@ -399,7 +404,7 @@ module.exports = class Creeper{
         return Item;
     }
 
-    move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix) {
+    move(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix, autoLifeArr, snailLifeArr, predatorLifeArr, humanLifeArr, grassEaterLifeArr, grassLifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         
@@ -413,13 +418,13 @@ module.exports = class Creeper{
 
             this.time--;
             if (this.time <= 0) {
-                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
+                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix, autoLifeArr, snailLifeArr, predatorLifeArr, humanLifeArr, grassEaterLifeArr, grassLifeArr);
             }
         }
         else {
             this.time--;
             if (this.time <= 0) {
-                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix);
+                this.Boom(grassArr, grassEaterArr, predatorArr, humanArr, snailArr, slimeArr, autoArr, creeperArr, matrix, autoLifeArr, snailLifeArr, predatorLifeArr, humanLifeArr, grassEaterLifeArr, grassLifeArr);
             }
         }
     }

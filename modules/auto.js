@@ -36,7 +36,7 @@ module.exports = class Auto extends ParentClass{
         return super.chooseCell(character, matrix);
     }
 
-    move(grassArr, matrix) {
+    move(grassArr, matrix, grassLifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells, matrix);
 
@@ -48,9 +48,9 @@ module.exports = class Auto extends ParentClass{
             for(var i in grassArr){
                 if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y ) {
                     grassArr.splice(i, 1);
-                        var gr = new Grass (this.x, this.y, 1);
-                        grassArr.push(gr);
-                        matrix[this.y][this.x] = 1;
+                    var gr = new Grass (this.x, this.y, 1);
+                    grassArr.push(gr);
+                    matrix[this.y][this.x] = 1;
                     break;
                 }
             }
@@ -72,7 +72,7 @@ module.exports = class Auto extends ParentClass{
 
         }
     }
-    exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix, snailLifeArr, predatorLifeArr, grassEaterLifeArr) {
+    exterminate(grassEaterArr, grassArr, predatorArr, snailArr, matrix, snailLifeArr, predatorLifeArr, grassEaterLifeArr, grassLifeArr) {
 
         var grassEaters = this.chooseCell(2, matrix);
         var grassEater = this.random(grassEaters);
@@ -129,7 +129,7 @@ module.exports = class Auto extends ParentClass{
             }
         }
         else {
-            this.move(grassArr, matrix);
+        this.move(grassArr, matrix, grassLifeArr);
         }
     }
 }

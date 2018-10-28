@@ -37,15 +37,21 @@ module.exports = class GrassEater extends ParentClass{
         
         if(grass){
 
-            matrix[this.y][this.x]=0;
-            matrix[grass[1]][grass[0]] = 2;
-            this.x=grass[0];
-            this.y=grass[1];
-            grassLifeArr[1]++;
+            
             
             for (var i in grassArr) {
                 if (grass[0] == grassArr[i].x && grass[1] == grassArr[i].y) {
+
                     grassArr.splice(i, 1);
+
+                    matrix[this.y][this.x] = 0;
+                    matrix[grass[1]][grass[0]] = 2;
+
+                    this.x=grass[0];
+                    this.y=grass[1];
+
+                    grassLifeArr[1]++;
+
                     break;
                 }
             }
